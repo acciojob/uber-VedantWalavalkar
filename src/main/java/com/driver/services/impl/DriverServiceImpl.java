@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.driver.model.Driver;
 import com.driver.repository.DriverRepository;
 
+import java.util.Optional;
+
 @Service
 public class DriverServiceImpl implements DriverService {
 
@@ -21,18 +23,30 @@ public class DriverServiceImpl implements DriverService {
 	@Override
 	public void register(String mobile, String password){
 		//Save a driver in the database having given details and a cab with ratePerKm as 10 and availability as True by default.
-
+		Driver driver = new Driver();
+		driver.setMobile(mobile);
+		driver.setPassword(password);
+		Cab cab = new Cab();
+		cab.setDriver(driver);
+		cab.setPerKmRate(10);
+		cab.setAvailable(true);
+		cabRepository3.save(cab);
+		driverRepository3.save(driver);
 	}
 
 	@Override
 	public void removeDriver(int driverId){
 		// Delete driver without using deleteById function
-
+		driverRepository3.deleteDriver(driverId);
 	}
 
 	@Override
 	public void updateStatus(int driverId){
-		//Set the status of respective car to unavailable
-
+		//Set the status of respective car to unavilable
+		Optional<Driver> optionalDriver = driverRepository3.findById(driverId);
+		if(!optionalDriver.isPresent())return;
+		Driver driver = optionalDriver.get();
+		Cab cab = driver.getCab();
+		cab.setAvailable(false);
 	}
 }
