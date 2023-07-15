@@ -69,7 +69,7 @@ public class CustomerServiceImpl implements CustomerService {
 		Optional<TripBooking> optionalTripBooking = tripBookingRepository2.findById(tripId);
 		TripBooking tripBooking = optionalTripBooking.get();
 		tripBooking.setStatus(TripStatus.CANCELED);
-		tripBookingRepository2.save(tripBooking);
+		tripBookingRepository2.deleteById(tripId);
 	}
 
 	@Override
