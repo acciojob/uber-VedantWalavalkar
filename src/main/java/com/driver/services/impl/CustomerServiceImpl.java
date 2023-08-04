@@ -57,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
 				TripBooking savedTrip = tripBookingRepository2.save(tripBooking);
 				driver.getTripBookingList().add(savedTrip);
 				driverRepository2.save(driver);
-				return savedTrip;
+				return tripBooking;
 			}
 		}
 		throw new Exception("No cab available!");
